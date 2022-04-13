@@ -41,5 +41,7 @@ jobs:
             type=raw,value=${{ github.ref_name }},suffix=-{{date ''}},priority=24
             type=sha,priority=20
             type=sha,format=long,priority=15
+          labels: |
+            org.opencontainers.image.description=My Cool Description
             
             
