@@ -38,7 +38,7 @@ jobs:
             type=semver,pattern={{raw}},suffix=-{{date ''}},priority=25
             type=sha,priority=20
             type=sha,format=long,priority=15
-            type=raw,suffix={{date ''}},priority=10
+            type=raw,value=foo,suffix={{date ''}},priority=10
             
       - name: Output Tags
         run: echo ${{ steps.docker_meta.outputs.tags }}
