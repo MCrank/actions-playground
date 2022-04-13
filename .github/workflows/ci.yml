@@ -22,7 +22,7 @@ jobs:
         if: github.ref == 'refs/heads/main'
         uses: anothrNick/github-tag-action@1.35.0
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.ACTIONS_TOKEN }}
           WITH_V: 'true'
           DEFAULT_BUMP: patch
 
