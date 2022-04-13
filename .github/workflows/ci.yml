@@ -3,7 +3,7 @@
 name: CI
 
 env: 
-  DOCKERHUB_REPO: mcrank/test
+  DOCKERHUB_REPO: mcrank/twix
 
 on:
   push:
