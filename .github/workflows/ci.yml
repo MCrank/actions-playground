@@ -38,7 +38,7 @@ jobs:
           tags: |
             type=semver,pattern={{raw}},priority=30
             type=semver,pattern={{raw}},suffix=-{{date ''}},priority=25
-            type=raw,value=github.ref_name,suffix=-{{date ''}},priority=24
+            type=raw,value=${{ github.ref_name }},suffix=-{{date ''}},priority=24
             type=sha,priority=20
             type=sha,format=long,priority=15
             
