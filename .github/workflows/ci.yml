@@ -52,5 +52,5 @@ jobs:
         env:
           TWIX_TAGS: ${{ needs.build.outputs.tags }}
         run: |
-          echo ${{ needs.build.outputs.tags.0 }}
+          echo $TWIX_TAGS[0]
 
