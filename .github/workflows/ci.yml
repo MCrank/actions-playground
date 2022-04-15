@@ -69,6 +69,8 @@ jobs:
         uses: docker/metadata-action@v3
         with:
           images: ${{ env.DOCKERHUB_REPO }}
+          flavor: |
+            latest=false
           tags: |
             type=ref,event=tag,priority=30
             type=ref,event=tag,suffix=-{{date ''}},priority=20
