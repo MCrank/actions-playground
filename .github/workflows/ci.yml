@@ -48,16 +48,16 @@ jobs:
 #           git tag --force "${MAJOR}"
 #           git push --tags --force
 
-      - name: Generate Docker Tags
-        if: startsWith(github.ref, 'refs/tags/v')
-        id: docker_meta
-        uses: docker/metadata-action@v3
-        with:
-          images: ${{ env.DOCKERHUB_REPO }}
-          tags: |
-            type=ref,event=tag,priority=30
-            type=ref,event=tag,suffix=-{{date ''}},priority=20
-            type=sha,priority=10
+#       - name: Generate Docker Tags
+#         if: startsWith(github.ref, 'refs/tags/v')
+#         id: docker_meta
+#         uses: docker/metadata-action@v3
+#         with:
+#           images: ${{ env.DOCKERHUB_REPO }}
+#           tags: |
+#             type=ref,event=tag,priority=30
+#             type=ref,event=tag,suffix=-{{date ''}},priority=20
+#             type=sha,priority=10
   debug:
     runs-on: ubuntu-latest
     if: startsWith(github.ref, 'refs/tags/v')
@@ -70,6 +70,6 @@ jobs:
         with:
           images: ${{ env.DOCKERHUB_REPO }}
           tags: |
-            type=semver,pattern=v{{major}},priority=40
-            type=semver,pattern=v{{major}},suffix=-{{date ''}},priority=30
-            type=sha,priority=20
+            type=ref,event=tag,priority=30
+            type=ref,event=tag,suffix=-{{date ''}},priority=20
+            type=sha,priority=10
