@@ -32,7 +32,7 @@ jobs:
 #         if: github.ref == 'refs/heads/main'
         id: tag_bump
         uses: mathieudutour/github-tag-action@v6.0
-        env:
+        with:
           github_token: ${{ secrets.ACTIONS_TOKEN }}
           custom_tag: ${{ steps.compute-tag.outputs.next_tag }}
       
