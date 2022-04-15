@@ -78,4 +78,4 @@ jobs:
             type=sha,priority=10
             
       - name: Output Tags
-        run: echo ${{ steps.docker_meta.outputs.tags }}
+        run: echo ${{ fromJSON(steps.docker_meta.outputs.json).tags[0] }}
