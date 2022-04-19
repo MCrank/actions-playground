@@ -8,6 +8,9 @@ jobs:
     name: Inputs outputs
     runs-on: ubuntu-latest
     
+    env:
+      DEPLOYMENT_IMAGE: " mobilecoin/twix:${{ github.ref_name }}"
+    
     steps:
       - name: Inputs
-        run: echo ${{ github.ref_name }}
+        run: echo ${DEPLOYMENT_IMAGE}
