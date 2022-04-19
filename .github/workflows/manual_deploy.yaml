@@ -1,0 +1,13 @@
+name: Manual Deploy
+
+on:
+  workflow_dispatch:
+  
+jobs:
+  debug:
+    name: Inputs outputs
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Inputs
+        run: echo ${{ inputs }}
