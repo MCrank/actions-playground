@@ -1,5 +1,8 @@
 name: Manual Deploy
 
+env:
+  DOCKERHUB_REPO: mobilecoin/twix
+
 on:
   workflow_dispatch:
   
@@ -9,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     
     env:
-      DEPLOYMENT_IMAGE: " mobilecoin/twix:${{ github.ref_name }}"
+      DEPLOYMENT_IMAGE: "${{ env.DOCKERHUB_REPO }}:${{ github.ref_name }}"
     
     steps:
       - name: Inputs
