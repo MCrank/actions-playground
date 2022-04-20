@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     
     env:
-      DEPLOYMENT_IMAGE: "${{ env.DOCKERHUB_REPO }}:${{ github.ref_name }}"
+      DEPLOYMENT_IMAGE: "${DOCKERHUB_REPO}:${{ github.ref_name }}"
     
     steps:
       - name: Inputs
