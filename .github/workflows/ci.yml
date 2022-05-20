@@ -40,7 +40,7 @@ jobs:
           
       - name: Save Yaml
         run: |
-          cat <<EOF $HOME/appvalues.yaml
+          cat <<EOF >$HOME/appvalues.yaml
           appWebSecret:
             secret:
                 external: true
