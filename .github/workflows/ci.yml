@@ -40,7 +40,7 @@ jobs:
           
       - name: Save Yaml
         run: |
-          cat <<EOF /tmp/appvalues.yaml
+          cat <<EOF $HOME/appvalues.yaml
           appWebSecret:
             secret:
                 external: true
@@ -50,7 +50,7 @@ jobs:
           EOF
       
       - name: Output
-        run: echo /tmp.appvalues.yaml
+        run: echo $HOME/appvalues.yaml
         
 #       - name: Push new Major Version
 #         if: github.ref == 'refs/heads/main'
