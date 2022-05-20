@@ -37,7 +37,21 @@ jobs:
           github_token: ${{ secrets.ACTIONS_TOKEN }}
           tag_prefix: ''
           custom_tag: ${{ steps.compute-tag.outputs.next_tag }}
+          
+      - name: Save Yaml
+        run: |
+          cat <<EOF /tmp/appvalues.yaml
+          appWebSecret:
+            secret:
+                external: true
+                name: app-web
+            data:
+              apiKey: ${{ secrets.MY_SECRET }}
+          EOF
       
+      - name: Output
+        run: echo /tmp.appvalues.yaml
+        
 #       - name: Push new Major Version
 #         if: github.ref == 'refs/heads/main'
 #         env:
