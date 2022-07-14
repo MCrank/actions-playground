@@ -1,5 +1,9 @@
 name: Manual Deploy
 
+env:
+  MY_VAR: World!
+  MY_OTHER_VAR: Hello/${{ env.MY_VAR }}
+
 on:
   workflow_dispatch:
 
@@ -35,3 +39,6 @@ jobs:
                 }
               ]
             }
+      
+      - name: Env Echo
+        run: echo ${MY_OTHER_VAR}
