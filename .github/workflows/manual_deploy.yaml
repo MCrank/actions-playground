@@ -2,7 +2,7 @@ name: Manual Deploy
 
 env:
   MY_VAR: World!
-  MY_OTHER_VAR: Hello/${{ MY_VAR }}
+  MY_OTHER_VAR: "Hello/${{ MY_VAR }}"
 
 on:
   workflow_dispatch:
