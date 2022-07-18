@@ -1,8 +1,8 @@
 name: Manual Deploy
 
-env:
-  MY_VAR: World!
-  MY_OTHER_VAR: "Hello/${{ MY_VAR }}"
+# env:
+#   MY_VAR: World!
+#   MY_OTHER_VAR: "Hello/${{ MY_VAR }}"
 
 on:
   workflow_dispatch:
