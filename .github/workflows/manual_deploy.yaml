@@ -3,11 +3,18 @@ name: Manual Deploy
 env:
   MY_VAR: World!
   MY_OTHER_VAR: "Hello/${{ MY_VAR }}"
+  GITHUB_CONTEXT: ${{ toJson(github) }}
 
 on:
-  workflow_dispatch:
+  delete:
 
 jobs:
+  echo_context:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Github Context
+        run: echo "$GITHUB_CONTEXT"
+
   debug:
     name: Inputs outputs
     runs-on: ubuntu-latest
@@ -40,6 +47,6 @@ jobs:
                 }
               ]
             }
-      
+
       - name: Env Echo
         run: echo ${MY_OTHER_VAR}
