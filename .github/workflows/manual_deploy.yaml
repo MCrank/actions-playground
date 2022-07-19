@@ -1,8 +1,6 @@
 name: Manual Deploy
 
 env:
-  MY_VAR: World!
-  MY_OTHER_VAR: "Hello/${{ MY_VAR }}"
   GITHUB_CONTEXT: ${{ toJson(github) }}
 
 on:
@@ -47,6 +45,3 @@ jobs:
                 }
               ]
             }
-
-      - name: Env Echo
-        run: echo ${MY_OTHER_VAR}
