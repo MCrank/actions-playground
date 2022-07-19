@@ -16,7 +16,7 @@ jobs:
   debug:
     name: Inputs outputs
     runs-on: ubuntu-latest
-    if: startsWith(github.ref, 'refs/branch/feature/*')
+    if: startsWith(github.event.ref, 'feature/')
 
     env:
       DEPLOYMENT_IMAGE: "mobilecoin/twix:${{ github.ref_name }}"
