@@ -2,21 +2,44 @@ name: Manual Deploy
 
 env:
   GITHUB_CONTEXT: ${{ toJson(github) }}
+  ENV_CONTEXT: ${{ toJson(env) }}
+  JOB_CONTEXT: ${{ toJson(job) }}
+  STEPS_CONTEXT: ${{ toJson(steps) }}
+  RUNNER_CONTEXT: ${{ toJson(runner) }}
 
 on:
-  delete:
+  push:
+    tags:
+      - "v*"
 
 jobs:
-  echo_context:
+  echo:
     runs-on: ubuntu-latest
     steps:
       - name: Github Context
-        run: echo "$GITHUB_CONTEXT"
+        run: |
+          echo "$GITHUB_CONTEXT"
+
+      - name: Env Context
+        run: |
+          echo "$ENV_CONTEXT"
+
+      - name: Job Context
+        run: |
+          echo "$JOB_CONTEXT"
+
+      - name: Steps Context
+        run: |
+          echo "$STEPS_CONTEXT"
+
+      - name: Runner Context
+        run: |
+          echo "$RUNNER_CONTEXT"
 
   debug:
     name: Inputs outputs
     runs-on: ubuntu-latest
-    if: startsWith(github.event.ref, 'feature/')
+    # if: startsWith(github.event.ref, 'feature/')
 
     env:
       DEPLOYMENT_IMAGE: "mobilecoin/twix:${{ github.ref_name }}"
@@ -34,14 +57,39 @@ jobs:
           channel-id: "C01V90RS9NH" #web-app-bots
           payload: |
             {
-              "text": "GitHub Action build result: ${{ job.status }}\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}",
               "blocks": [
                 {
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "GitHub Action build result: ${{ job.status }}\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
+                    "text": "GitHub Action build result: ${{ job.status }}\n*Twix ${{ github.ref_name }} Deployment Successful*"
+                  }
+                },
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "*Link:*\n[${{ github.repository }}](${{ github.event.head_commit.url }})\n*Run #:*\n${{ github.run_number }}\n*Commit:*\n ${{ github.sha }}"
+                  },
+                  "accessory": {
+                    "type": "image",
+                    "image_url": "https://p7.hiclipart.com/preview/564/823/637/success-kid-desktop-wallpaper-internet-meme-infant-meme.jpg",
+                    "alt_text": "success kid"
                   }
                 }
               ]
             }
+
+# https://i.imgflip.com/1g8tc5.jpg
+# {
+#   "text": "GitHub Action build result: ${{ job.status }}\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}",
+#   "blocks": [
+#     {
+#       "type": "section",
+#       "text": {
+#         "type": "mrkdwn",
+#         "text": "GitHub Action build result: ${{ job.status }}\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
+#       }
+#     }
+#   ]
+# }
