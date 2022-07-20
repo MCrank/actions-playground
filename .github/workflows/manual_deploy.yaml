@@ -2,10 +2,10 @@ name: Manual Deploy
 
 env:
   GITHUB_CONTEXT: ${{ toJson(github) }}
-  ENV_CONTEXT: ${{ toJson(env) }}
-  JOB_CONTEXT: ${{ toJson(job) }}
-  STEPS_CONTEXT: ${{ toJson(steps) }}
-  RUNNER_CONTEXT: ${{ toJson(runner) }}
+  # ENV_CONTEXT: ${{ toJson(env) }}
+  # JOB_CONTEXT: ${{ toJson(job) }}
+  # STEPS_CONTEXT: ${{ toJson(steps) }}
+  # RUNNER_CONTEXT: ${{ toJson(runner) }}
 
 on:
   push:
@@ -20,21 +20,21 @@ jobs:
         run: |
           echo "$GITHUB_CONTEXT"
 
-      - name: Env Context
-        run: |
-          echo "$ENV_CONTEXT"
+      # - name: Env Context
+      #   run: |
+      #     echo "$ENV_CONTEXT"
 
-      - name: Job Context
-        run: |
-          echo "$JOB_CONTEXT"
+      # - name: Job Context
+      #   run: |
+      #     echo "$JOB_CONTEXT"
 
-      - name: Steps Context
-        run: |
-          echo "$STEPS_CONTEXT"
+      # - name: Steps Context
+      #   run: |
+      #     echo "$STEPS_CONTEXT"
 
-      - name: Runner Context
-        run: |
-          echo "$RUNNER_CONTEXT"
+      # - name: Runner Context
+      #   run: |
+      #     echo "$RUNNER_CONTEXT"
 
   debug:
     name: Inputs outputs
