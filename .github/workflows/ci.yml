@@ -7,7 +7,7 @@ env:
 
 on:
   push:
-    # branches: [ 'main' ]
+    branches: ["main"]
     tags: ["v*"]
   workflow_dispatch:
 
@@ -39,6 +39,7 @@ jobs:
       #           custom_tag: ${{ steps.compute-tag.outputs.next_tag }}
 
       - name: Github Tag Bump
+        if: github.ref == 'refs/heads/main'
         uses: anothrNick/github-tag-action@1.36.0
         env:
           GITHUB_TOKEN: ${{ secrets.ACTIONS_TOKEN }}
