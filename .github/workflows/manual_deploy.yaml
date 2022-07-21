@@ -9,8 +9,8 @@ env:
 
 on:
   push:
-    tags:
-      - "v*"
+    # tags:
+    #   - "v*"
 
 jobs:
   echo:
@@ -62,23 +62,57 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "GitHub Action build result: ${{ job.status }}\n*Twix ${{ github.ref_name }} Deployment Successful*"
+                    "text": "GitHub Action build result: *${{ job.status }}*\n\n"
+                  }
+                },
+                {
+                  "type": "divider"
+                },
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "*Twix ${{ github.ref_name }} Deployment*\n*Status:* Successful\n*Run #:* ${{ github.run_number }}\n*Author:* ${{github.head_commit.author.username }}"
+                  },
+                  "accessory": {
+                    "type": "image",
+                    "image_url": "https://p7.hiclipart.com/preview/564/823/637/success-kid-desktop-wallpaper-internet-meme-infant-meme.jpg",
+                    "alt_text": "computer thumbnail"
                   }
                 },
                 {
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "*Link:*\n[${{ github.repository }}](${{ github.event.head_commit.url }})\n*Run #:*\n${{ github.run_number }}\n*Commit:*\n ${{ github.sha }}"
-                  },
-                  "accessory": {
-                    "type": "image",
-                    "image_url": "https://p7.hiclipart.com/preview/564/823/637/success-kid-desktop-wallpaper-internet-meme-infant-meme.jpg",
-                    "alt_text": "success kid"
+                    "text": "*<https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}|Link to Workflow>*"
                   }
                 }
               ]
             }
+
+# {
+#   "blocks": [
+#     {
+#       "type": "section",
+#       "text": {
+#         "type": "mrkdwn",
+#         "text": "Twix ${{ github.ref_name }} Deployment: *${{ job.status }}*\n"
+#       }
+#     },
+#     {
+#       "type": "section",
+#       "text": {
+#         "type": "mrkdwn",
+#         "text": "*Run #:* \n${{ github.run_number }}\n*Commit:*\n ${{ github.sha }}"
+#       },
+#       "accessory": {
+#         "type": "image",
+#         "image_url": "https://p7.hiclipart.com/preview/564/823/637/success-kid-desktop-wallpaper-internet-meme-infant-meme.jpg",
+#         "alt_text": "success kid"
+#       }
+#     }
+#   ]
+# }
 
 # https://i.imgflip.com/1g8tc5.jpg
 # {
