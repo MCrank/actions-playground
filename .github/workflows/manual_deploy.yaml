@@ -33,7 +33,7 @@ jobs:
       - name: Post to Slack Success
         if: success()
         uses: slackapi/slack-github-action@v1.19.0
-        id: slack
+        id: slack_success
         env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
         with:
@@ -76,7 +76,7 @@ jobs:
       - name: Post to Slack Failure
         if: failure()
         uses: slackapi/slack-github-action@v1.19.0
-        id: slack
+        id: slack_failure
         env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
         with:
