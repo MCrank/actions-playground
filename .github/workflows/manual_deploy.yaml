@@ -2,10 +2,6 @@ name: Manual Deploy
 
 env:
   GITHUB_CONTEXT: ${{ toJson(github) }}
-  # ENV_CONTEXT: ${{ toJson(env) }}
-  # JOB_CONTEXT: ${{ toJson(job) }}
-  # STEPS_CONTEXT: ${{ toJson(steps) }}
-  # RUNNER_CONTEXT: ${{ toJson(runner) }}
 
 on:
   push:
@@ -19,22 +15,8 @@ jobs:
       - name: Github Context
         run: |
           echo "$GITHUB_CONTEXT"
-
-      # - name: Env Context
-      #   run: |
-      #     echo "$ENV_CONTEXT"
-
-      # - name: Job Context
-      #   run: |
-      #     echo "$JOB_CONTEXT"
-
-      # - name: Steps Context
-      #   run: |
-      #     echo "$STEPS_CONTEXT"
-
-      # - name: Runner Context
-      #   run: |
-      #     echo "$RUNNER_CONTEXT"
+      - name: Failure
+        run: exit 1
 
   debug:
     name: Inputs outputs
@@ -48,7 +30,8 @@ jobs:
       - name: Inputs
         run: echo ${DEPLOYMENT_IMAGE}
 
-      - name: Post to Slack
+      - name: Post to Slack Success
+        if: success()
         uses: slackapi/slack-github-action@v1.19.0
         id: slack
         env:
@@ -62,34 +45,73 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "GitHub Action build result: ${{ job.status }}\n*Twix ${{ github.ref_name }} Deployment Successful*"
+                    "text": "GitHub Action build result: *${{ job.status }}*\n\n"
+                  }
+                },
+                {
+                  "type": "divider"
+                },
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "Version *${{ github.ref_name }}*\n\nStatus: *Successful*\n\nRun #: *${{ github.run_number }}*\n\nAuthor: *${{github.event.head_commit.author.username }}*"
+                  },
+                  "accessory": {
+                    "type": "image",
+                    "image_url": "https://tinyurl.com/5es9sm27",
+                    "alt_text": "computer thumbnail"
                   }
                 },
                 {
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "*Link:*\n[${{ github.repository }}](${{ github.event.head_commit.url }})\n*Run #:*\n${{ github.run_number }}\n*Commit:*\n ${{ github.sha }}"
-                  },
-                  "accessory": {
-                    "type": "image",
-                    "image_url": "https://p7.hiclipart.com/preview/564/823/637/success-kid-desktop-wallpaper-internet-meme-infant-meme.jpg",
-                    "alt_text": "success kid"
+                    "text": "*<https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}|Link to Workflow>*"
                   }
                 }
               ]
             }
 
-# https://i.imgflip.com/1g8tc5.jpg
-# {
-#   "text": "GitHub Action build result: ${{ job.status }}\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}",
-#   "blocks": [
-#     {
-#       "type": "section",
-#       "text": {
-#         "type": "mrkdwn",
-#         "text": "GitHub Action build result: ${{ job.status }}\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
-#       }
-#     }
-#   ]
-# }
+      - name: Post to Slack Failure
+        if: failure()
+        uses: slackapi/slack-github-action@v1.19.0
+        id: slack
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+        with:
+          channel-id: "C01V90RS9NH" #web-app-bots
+          payload: |
+            {
+              "blocks": [
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "GitHub Action build result: *${{ job.status }}*\n\n"
+                  }
+                },
+                {
+                  "type": "divider"
+                },
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "Version *${{ github.ref_name }}*\n\nStatus: *Failed*\n\nRun #: *${{ github.run_number }}*\n\nAuthor: *${{github.event.head_commit.author.username }}*"
+                  },
+                  "accessory": {
+                    "type": "image",
+                    "image_url": "https://tinyurl.com/mr2yuu4d",
+                    "alt_text": "computer thumbnail"
+                  }
+                },
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "*<https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}|Link to Workflow>*"
+                  }
+                }
+              ]
+            }
