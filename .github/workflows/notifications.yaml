@@ -1,0 +1,78 @@
+name: Slack test
+
+env:
+  SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+
+on:
+  push:
+
+jobs:
+  start_notification:
+    runs-on: ubuntu-latest
+    outputs:
+      slack_msg_id: ${{ steps.slack_msg.outputs.id }}
+    steps:
+      - name: Start notification
+        id: slack_msg
+        uses: voxmedia/github-action-slack-notify-build@v1
+        with:
+          channel: "C01V90RS9NH"
+          status: STARTING
+          color: warning
+
+  docker:
+    runs-on: ubuntu-latest
+    needs: [start_notification]
+    steps:
+      - name: Docker build
+        run: sleep 180s
+
+      - name: slack_docker
+        if: failure()
+        uses: voxmedia/github-action-slack-notify-build@v1
+        with:
+          channel: "C01V90RS9NH"
+          status: FAILED
+          color: danger
+          message_id: ${{ needs.start_notifications.outputs.slack_msg_id }}
+
+  helm:
+    runs-on: ubuntu-latest
+    needs: [start_notification, docker]
+    steps:
+      - name: Helm push
+        run: sleep 180s
+
+      - name: slack_helm_fail
+        if: failure()
+        uses: voxmedia/github-action-slack-notify-build@v1
+        with:
+          channel: "C01V90RS9NH"
+          status: FAILED
+          color: danger
+          message_id: ${{ needs.start_notifications.outputs.slack_msg_id }}
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: [start_notification]
+    steps:
+      - name: Helm deploy
+        run: sleep 180s
+
+      - name: slack_deploy_fail
+        if: failure()
+        uses: voxmedia/github-action-slack-notify-build@v1
+        with:
+          channel: "C01V90RS9NH"
+          status: FAILED
+          color: danger
+          message_id: ${{ needs.start_notifications.outputs.slack_msg_id }}
+
+      - name: slack_deploy_success
+        if: success()
+        uses: voxmedia/github-action-slack-notify-build@v1
+        with:
+          channel: "C01V90RS9NH"
+          status: SUCCESS
+          color: good
+          message_id: ${{ needs.start_notifications.outputs.slack_msg_id }}
