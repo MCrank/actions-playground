@@ -29,9 +29,6 @@ jobs:
       - name: Docker build
         run: sleep 60s
 
-      - name: Fail
-        run: exit 1
-
       - name: slack_docker
         if: failure()
         uses: voxmedia/github-action-slack-notify-build@v1
@@ -63,6 +60,9 @@ jobs:
     steps:
       - name: Helm deploy
         run: sleep 60s
+
+      - name: Fail
+        run: exit 1
 
       - name: Echo Message Id
         run: echo ${{ needs.start_notification.outputs.slack_msg_id }}
