@@ -14,8 +14,6 @@ jobs:
     steps:
       - name: Start notification
         id: slack_msg
-        env:
-          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
         uses: voxmedia/github-action-slack-notify-build@v1
         with:
           channel_id: "C01V90RS9NH"
@@ -30,6 +28,9 @@ jobs:
     steps:
       - name: Docker build
         run: sleep 60s
+
+      - name: Fail
+        run: exit 1
 
       - name: slack_docker
         if: failure()
