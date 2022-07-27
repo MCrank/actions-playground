@@ -17,7 +17,7 @@ jobs:
         uses: voxmedia/github-action-slack-notify-build@v1
         with:
           channel_id: "C01V90RS9NH"
-          status: STARTING
+          status: RUNNING
           color: warning
       - name: Messsage Id
         run: echo ${{ steps.slack_msg.outputs.message_id }}
@@ -68,19 +68,10 @@ jobs:
         run: echo ${{ needs.start_notification.outputs.slack_msg_id }}
 
       - name: slack_deploy_fail
-        if: failure()
+        if: always()
         uses: voxmedia/github-action-slack-notify-build@v1
         with:
           channel_id: "C01V90RS9NH"
-          status: FAILED
-          color: danger
-          message_id: ${{ needs.start_notification.outputs.slack_msg_id }}
-
-      - name: slack_deploy_success
-        if: success()
-        uses: voxmedia/github-action-slack-notify-build@v1
-        with:
-          channel_id: "C01V90RS9NH"
-          status: SUCCESS
-          color: good
+          status: ${{ success() && 'SUCCESS' || 'FAILED' ))
+          color: ${{ success() && 'good' || 'danger' ))
           message_id: ${{ needs.start_notification.outputs.slack_msg_id }}
