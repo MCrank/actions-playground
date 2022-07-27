@@ -2,6 +2,7 @@ name: Slack test
 
 env:
   SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+  SLACK_CHANNEL_ID: C01V90RS9NH
 
 on:
   push:
@@ -16,7 +17,7 @@ jobs:
         id: slack_msg
         uses: voxmedia/github-action-slack-notify-build@v1
         with:
-          channel_id: "C01V90RS9NH"
+          channel_id: ${{ env.SLACK_CHANNEL_ID }}
           status: RUNNING
           color: warning
       - name: Messsage Id
@@ -33,7 +34,7 @@ jobs:
         if: failure()
         uses: voxmedia/github-action-slack-notify-build@v1
         with:
-          channel_id: "C01V90RS9NH"
+          channel_id: ${{ env.SLACK_CHANNEL_ID }}
           status: FAILED
           color: danger
           message_id: ${{ needs.start_notification.outputs.slack_msg_id }}
@@ -71,7 +72,7 @@ jobs:
         if: always()
         uses: voxmedia/github-action-slack-notify-build@v1
         with:
-          channel_id: "C01V90RS9NH"
+          channel_id: ${{ env.SLACK_CHANNEL_ID }}
           status: ${{ job.status == 'success' && 'SUCCESS' || 'FAILED' }}
           color: ${{ job.status == 'success' && 'good' || 'danger' }}
           message_id: ${{ needs.start_notification.outputs.slack_msg_id }}
