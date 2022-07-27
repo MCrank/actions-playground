@@ -27,7 +27,7 @@ jobs:
     needs: [start_notification]
     steps:
       - name: Docker build
-        run: sleep 60s
+        run: sleep 10s
 
       - name: slack_docker
         if: failure()
@@ -43,7 +43,7 @@ jobs:
     needs: [start_notification, docker]
     steps:
       - name: Helm push
-        run: sleep 60s
+        run: sleep 10s
 
       - name: slack_helm_fail
         if: failure()
@@ -59,10 +59,10 @@ jobs:
     needs: [start_notification, helm]
     steps:
       - name: Helm deploy
-        run: sleep 60s
+        run: sleep 10s
 
       - name: Fail
-        run: exit 1
+        run: exit 0
 
       - name: Echo Message Id
         run: echo ${{ needs.start_notification.outputs.slack_msg_id }}
