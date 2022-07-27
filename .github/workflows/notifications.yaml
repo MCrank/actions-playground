@@ -72,6 +72,6 @@ jobs:
         uses: voxmedia/github-action-slack-notify-build@v1
         with:
           channel_id: "C01V90RS9NH"
-          status: ${{ success() && 'SUCCESS' || 'FAILED' }}
-          color: ${{ success() && 'good' || 'danger' }}
+          status: ${{ success && 'SUCCESS' || 'FAILED' }}
+          color: ${{ success && 'good' || 'danger' }}
           message_id: ${{ needs.start_notification.outputs.slack_msg_id }}
