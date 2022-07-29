@@ -1,0 +1,17 @@
+name: Dev Delete
+
+env:
+  GITHUB_CONTEXT: ${{ toJson(github) }}
+
+on:
+  delete: {}
+
+jobs:
+  echo:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Echo branch
+        run: echo "${{ github.event.ref }} - ${{ github.event.ref_type }}"
+
+      - name: Echo Github Context
+        run: echo "$GITHUB_CONTEXT"
